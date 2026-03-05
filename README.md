@@ -1,10 +1,21 @@
-# Unified Time Series Model
+# Unified Time Series Model - Adapted for Maritime AIS data
 
 [**Project Page**](https://zitniklab.hms.harvard.edu/projects/UniTS/)  |   [**Paper link**](https://arxiv.org/pdf/2403.00131.pdf) **(Neurips 2024)**
 
 UniTS is a unified time series model that can process various tasks across multiple domains with shared parameters and does not have any task-specific modules.
 
 Authors: [Shanghua Gao](https://shgao.site/) [Teddy Koker](https://teddykoker.com) [Owen Queen](https://owencqueen.github.io/) [Thomas Hartvigsen](https://www.tomhartvigsen.com/) [Theodoros Tsiligkaridis](https://sites.google.com/view/theo-t) [Marinka Zitnik](https://zitniklab.hms.harvard.edu/)
+
+## Maritime anomaly detection
+UniTS is uniquely versatile timeseries model that is also capable of processing k-dimensional time series (many current-generation models are limited)
+In one project, I explored whether UniTS can successfully detect anomalies in maritime telemetry data, specifically AIS [US Coast Guard datasets](https://www.navcen.uscg.gov/contact/ais-historical-request)
+
+### Results:
+- I have built a custom data loader for UniTS that converts AIS data to UniTS tokens
+- The resulting system produced anomaly/normal classification with 90% AUC ROC
+### Observations
+- Pretraining was not trivial: the model did not converge when trained on AIS alone.
+- It was necessary to use a pre-trained model, that was SFT'ed to various data series.  Only then it would converge with AIS data.
 
 ## Overview
 Foundation models, especially LLMs, are profoundly transforming deep learning. Instead of training many task-specific models, we can adapt a single pretrained model to many tasks via few-shot prompting or fine-tuning. However, current foundation models apply to sequence data but not to time series, which present unique challenges due to the inherent diverse and multi-domain time series datasets, diverging task specifications across forecasting, classification and other types of tasks, and the apparent need for task-specialized models.
